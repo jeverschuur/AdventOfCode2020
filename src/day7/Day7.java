@@ -33,18 +33,17 @@ public class Day7
       System.out.println( "solution 2: " + countAllBagsIn( "shiny gold" ) );
    }
 
-   public boolean bagContainsColor( BagsWithColor poBag, String psColor, int piIndent )
+   public boolean bagContainsColor( BagsWithColor poBag, String psColor )
    {
-      if( poBag.msColor.equals( psColor ) )
-         return true;
-
-      if( poBag.maoContents == null )
-         return false;
-
       for( BagsWithColor loBag : poBag.maoContents )
       {
+         if( loBag.msColor.equals( psColor ) )
+         {
+            return true;
+         }
+
          BagsWithColor loBagWithContents = mcoBags.get( loBag.msColor );
-         if( bagContainsColor( loBagWithContents, psColor, piIndent + 1 ) )
+         if( bagContainsColor( loBagWithContents, psColor ) )
          {
             return true;
          }
@@ -58,7 +57,7 @@ public class Day7
       int liCount = 0;
       for( BagsWithColor loBag : mcoBags.values() )
       {
-         if( loBag.msColor.equals( psColor ) == false && bagContainsColor( loBag, psColor, 0 ) )
+         if( bagContainsColor( loBag, psColor ) )
          {
             liCount++;
          }
@@ -72,12 +71,9 @@ public class Day7
       BagsWithColor loOuter = mcoBags.get( psColor );
       long liCount = 0;
 
-      if( loOuter.maoContents != null )
+      for( BagsWithColor loBag : loOuter.maoContents )
       {
-         for( BagsWithColor loBag : loOuter.maoContents )
-         {
-            liCount += loBag.miCount * ( 1 + countAllBagsIn( loBag.msColor ) );
-         }
+         liCount += loBag.miCount + ( loBag.miCount * countAllBagsIn( loBag.msColor ) );
       }
 
       return liCount;

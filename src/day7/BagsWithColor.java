@@ -1,5 +1,6 @@
 package day7;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BagsWithColor
@@ -16,6 +17,10 @@ public class BagsWithColor
       this.msColor = psColor;
       this.miCount = piCount;
       this.maoContents = paoContents;
+      if( this.maoContents == null )
+      {
+         this.maoContents = new ArrayList<>();
+      }
    }
 
    @Override
